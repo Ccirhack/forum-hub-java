@@ -57,8 +57,8 @@ POST / PUT body:
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/Ccirhack/Foro-Hub-Java.git
-cd Foro-Hub-Java
+https://github.com/Ccirhack/forum-hub-java
+cd forum-hub-java
 
 # 2. Configure your database in src/main/resources/application.properties
 spring.datasource.url=jdbc:mysql://localhost:3306/forohub
