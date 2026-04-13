@@ -1,101 +1,96 @@
-# Foro Hub
+# Forum Hub
 
-Foro Hub es una API REST creada con Spring Boot que incluye operaciones CRUD y utiliza un token para brindar permisos de seguridad a cada request.
+REST API built with Spring Boot for a discussion forum. Supports full
+CRUD on topics and uses JWT-based authentication to secure every request.
 
-## Descripción
+![Java](https://img.shields.io/badge/Java_17-ED8B00?style=flat&logo=openjdk&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=flat&logo=springboot&logoColor=white)
+![Spring Security](https://img.shields.io/badge/Spring_Security-6DB33F?style=flat&logo=springsecurity&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=mysql&logoColor=white)
+![Flyway](https://img.shields.io/badge/Flyway-CC0200?style=flat&logo=flyway&logoColor=white)
 
-El proyecto permite realizar diversas operaciones de un foro, como autenticar usuarios, registrar tópicos, actualizar y eliminar tópicos. La API se asegura utilizando tokens 
-generados mediante login y contraseña.
+## Endpoints
 
-## Menú de Opciones
+### Authentication
 
-- **Autenticación**
-  - **Endpoint**: `/auth`
-  - **Método**: `POST`
-  - **Descripción**: Autentica al usuario y genera un token para su uso en solicitudes subsecuentes.
-  - **Formato JSON**:
-    ```json
-    {
-      "login": "usuario",
-      "clave": "password"
-    }
-    ```
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/auth` | Login and get JWT token |
 
-- **Registrar Tópico**
-  - **Endpoint**: `/topicos`
-  - **Método**: `POST`
-  - **Descripción**: Registra un nuevo tópico.
-  - **Formato JSON**:
-    ```json
-    {
-	     "mensaje": "Error al ejecutar una requisición",
-	     "nombreCurso": "HTTP en la web",
-	     "titulo": "Error validación HTTP"
-    }
-    ```
+Request body:
+```json
+{
+  "login": "usuario",
+  "clave": "password"
+}
+```
 
-- **Actualizar Tópico**
-  - **Endpoint**: `/topicos`
-  - **Método**: `PUT`
-  - **Descripción**: Actualiza los campos de un tópico existente.
-  - **Formato JSON**:
-    ```json
-    {
-        "id": "id del tópico almacenado en la base de datos",
-        "titulo": "Nuevo título del tópico",
-        "mensaje": "Nuevo mensaje del tópico",
-    	"nombreCurso": "Nuevo nombre del tópico",
-    }
-    ```
-- **Listar Tópicos**
-  - **Endpoint**: `/topicos`
-  - **Método**: `GET`
-  - **Descripción**: Muestra todos los tópicos registrados en la base de datos.
-    
-- **Eliminar Tópico**
-  - **Endpoint**: `/topicos/{id}`
-  - **Método**: `DELETE`
-  - **Descripción**: Elimina un tópico por su ID.
+### Topics
 
-## Tecnologías Utilizadas
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/topicos` | List all topics |
+| POST | `/topicos` | Create a new topic |
+| PUT | `/topicos` | Update an existing topic |
+| DELETE | `/topicos/{id}` | Delete a topic by ID |
 
-- Java (versión 17 en adelante)
+POST / PUT body:
+```json
+{
+  "titulo": "Topic title",
+  "mensaje": "Topic message",
+  "nombreCurso": "Course name"
+}
+```
+
+> All endpoints except `/auth` require the header `Authorization: Bearer `
+
+## Getting started
+
+### Prerequisites
+
+- Java 17+
+- MySQL running locally
 - Maven
-- Spring Boot
-- JAR format
-- Lombok
-- Spring Web
-- Spring Boot DevTools
-- Spring Data JPA
-- Flyway Migration
-- MySQL Driver
-- Validation
-- Spring Security
 
-## Instalación
+### Installation
 
-1. Clona este repositorio en tu máquina local:
-    ```bash
-    git clone https://github.com/Ccirhack/LiterAlura---Challenge-Java.git
-    ```
+```bash
+# 1. Clone the repository
+git clone https://github.com/Ccirhack/Foro-Hub-Java.git
+cd Foro-Hub-Java
 
-2. Navega al directorio del proyecto:
-    ```bash
-    cd foro-hub
-    ```
+# 2. Configure your database in src/main/resources/application.properties
+spring.datasource.url=jdbc:mysql://localhost:3306/forohub
+spring.datasource.username=YOUR_USER
+spring.datasource.password=YOUR_PASSWORD
+api.security.secret=YOUR_JWT_SECRET
 
-3. Configura tu base de datos MySQL y actualiza el archivo `application.properties` con tus credenciales de base de datos.
+# 3. Build and run (Flyway will create the tables automatically)
+mvn clean install
+mvn spring-boot:run
+```
 
-4. Compila y ejecuta el proyecto:
-    ```bash
-    mvn clean install
-    mvn spring-boot:run
-    ```
+## Tech stack
 
-## Contribuciones
+- Java 17, Spring Boot, Spring Security, Spring Data JPA
+- Flyway for database migrations
+- Lombok for boilerplate reduction
+- MySQL as database
+- Maven as build tool
 
-Las contribuciones son bienvenidas. Si deseas contribuir, por favor abre un issue primero para discutir los cambios que deseas realizar. Si deseas contribuir a este proyecto, por favor envía un pull request con una descripción clara de los cambios propuestos. Sería de gran ayuda saber en qué puedo mejorar y aprender.
+## What I learned
 
-## Contacto
+- Securing a REST API with JWT and Spring Security
+- Database versioning with Flyway migrations
+- Input validation with Bean Validation
+- Clean layered architecture with DTOs and repositories
 
-Para cualquier pregunta o comentario, por favor contáctame a través de mi perfil de GitHub o por correo electrónico a yuan.retamozo.27@unsch.edu.pe.
+## Contributing
+
+Contributions are welcome. Open an issue first to discuss changes,
+then submit a pull request.
+
+## Contact
+
+Yuan Retamozo · [LinkedIn](https://www.linkedin.com/in/yuan-retamozo/) · yretamozovilca@gmail.com
